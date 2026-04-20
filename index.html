@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Z Shadow Legend</title>
 
 <style>
@@ -13,7 +14,7 @@ body {
   color: #00ffcc;
 }
 
-/* MATRIX BACKGROUND */
+/* MATRIX */
 canvas {
   position: fixed;
   top: 0;
@@ -31,18 +32,18 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 18px;
   z-index: 999;
   text-shadow: 0 0 10px #00ffcc;
 }
 
 /* CARD */
 .card {
-  width: 320px;
-  height: 650px;
+  width: 90%;
+  max-width: 360px;
   margin: auto;
-  margin-top: 25px;
-  padding: 20px;
+  margin-top: 20px;
+  padding: 18px;
   border-radius: 12px;
   background: rgba(0,0,0,0.85);
   box-shadow: 0 0 20px #00ffcc;
@@ -50,25 +51,31 @@ canvas {
   flex-direction: column;
   justify-content: space-between;
 
-  transform: translateX(-100%);
-  animation: slideIn 1s forwards;
+  transform: translateY(40px);
+  opacity: 0;
+  animation: fadeIn 1s forwards;
 }
 
-@keyframes slideIn {
-  to { transform: translateX(0); }
+@keyframes fadeIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* DP */
 .dp {
-  width: 90px;
-  height: 90px;
+  width: 22vw;
+  max-width: 90px;
+  height: 22vw;
+  max-height: 90px;
   border-radius: 50%;
   border: 2px solid #00ffcc;
-  margin-bottom: 15px;
-  box-shadow: 0 0 25px #00ffcc;
+  margin-bottom: 12px;
+  box-shadow: 0 0 20px #00ffcc;
 }
 
-/* GLOW TEXT */
+/* TEXT */
 .glow {
   text-shadow: 0 0 5px #00ffcc, 0 0 15px #00ffcc;
   animation: pulse 2s infinite alternate;
@@ -80,15 +87,9 @@ canvas {
 }
 
 .line {
-  margin: 14px 0;
-  font-size: 14px;
-}
-
-/* CARD HOVER */
-.card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 40px #00ffff;
-  transition: 0.3s;
+  margin: 12px 0;
+  font-size: 3.5vw;
+  max-font-size: 14px;
 }
 
 /* CURSOR */
@@ -112,6 +113,7 @@ canvas {
   background: #0088cc;
   color: white;
   text-align: center;
+  font-size: 14px;
   transition: 0.3s;
 }
 .tg-btn:hover {
@@ -123,19 +125,14 @@ canvas {
 
 <body>
 
-<!-- MATRIX -->
 <canvas id="matrix"></canvas>
 
-<!-- LOADER -->
 <div id="loader">🔐 Accessing System...</div>
 
-<!-- MAIN CARD -->
 <div class="card" id="main" style="display:none;">
 
   <div>
-    <!-- LOCAL DP -->
     <img src="dp.png" class="dp">
-
     <h3 class="glow">𓆩 Z Shadow Legend 𓆪</h3>
     <div id="typing" class="glow cursor"></div>
   </div>
@@ -159,7 +156,7 @@ setTimeout(() => {
   document.getElementById("main").style.display = "flex";
 }, 3500);
 
-// TYPING TEXT
+// TYPING
 const lines = [
   "👤 Name : Prince",
   "🎂 Age : 22",
@@ -199,21 +196,21 @@ function typeLines() {
 }
 typeLines();
 
-// MATRIX EFFECT
+// MATRIX
 const canvas = document.getElementById("matrix");
 const ctx = canvas.getContext("2d");
 
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
+function resize() {
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+}
+resize();
+window.addEventListener("resize", resize);
 
-let letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-letters = letters.split("");
-
+let letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 let fontSize = 14;
 let columns = canvas.width / fontSize;
-
-let drops = [];
-for(let x = 0; x < columns; x++) drops[x] = 1;
+let drops = Array(Math.floor(columns)).fill(1);
 
 function draw() {
   ctx.fillStyle = "rgba(0,0,0,0.05)";
@@ -236,4 +233,4 @@ setInterval(draw, 35);
 </script>
 
 </body>
-  </html>
+</html>
